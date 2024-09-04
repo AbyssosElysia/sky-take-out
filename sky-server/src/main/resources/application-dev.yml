@@ -6,3 +6,10 @@ sky:
     database: sky_take_out
     username: root
     password: 15327938768Lzy+
+
+  minio:
+    endpoint: http://74.48.39.246:9000/
+    access-key: ahQuYa9khdLQgR1aruD6
+    secret-key: knkjiAtUijY66Q38uKwqkFOrun9pruyWfNt71GOO
+    bucket-name: sky-take-out
+    expiry-time: 86400
