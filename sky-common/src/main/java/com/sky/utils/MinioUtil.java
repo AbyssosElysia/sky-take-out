@@ -12,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.TimeUnit;
 
 @Data
 @AllArgsConstructor
@@ -34,12 +32,18 @@ public class MinioUtil {
     /**
      * 创建客户端实例
      */
-    public MinioUtil() {
+    public MinioUtil(String endpoint, String accessKey, String secretKey, String bucketName, int expiryTime) {
+        this.endpoint = endpoint;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+        this.bucketName = bucketName;
+        this.expiryTime = expiryTime;
         try {
             minioClient = MinioClient.builder()
                     .endpoint(endpoint)
                     .credentials(accessKey, secretKey)
                     .build();
+            log.info("创建客户端实例成功");
         } catch (Exception e) {
             log.error("创建客户端实例失败", e);
         }
@@ -51,7 +55,7 @@ public class MinioUtil {
      * @param is
      * @return
      */
-    public String upload(String fileName, InputStream is) {
+    public String upload(String fileName, InputStream is, long size) {
         log.info("开始上传文件: {}", fileName);
 
         try {
@@ -59,7 +63,7 @@ public class MinioUtil {
                     PutObjectArgs.builder()
                             .bucket(bucketName)
                             .object(fileName)
-                            .stream(is, -1, -1)
+                            .stream(is, size, -1)
                             .build());
             log.info("文件{}上传成功", fileName);
             return fileName;
