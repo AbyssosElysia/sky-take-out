@@ -13,3 +13,7 @@ sky:
     secret-key: knkjiAtUijY66Q38uKwqkFOrun9pruyWfNt71GOO
     bucket-name: sky-take-out
     expiry-time: 86400
+  redis:
+    host: localhost
+    port: 6379
+    database: 10
